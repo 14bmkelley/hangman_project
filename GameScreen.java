@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class GameScreen extends Screen {
 	
@@ -33,23 +34,23 @@ public class GameScreen extends Screen {
 	private JPanel corePanel;
 
 	public GameScreen(String toGuess) {
-
+		
 		//initalize fields
 		remainingGuesses = 10;
 		wrongGuesses = "";
 		word = toGuess;
 		visible = "";
-
+		
 		for (int i = 0; i < word.length(); ++i) {
 			visible += "_ ";
 		}
-
+		
 		//initalize components
 		status = new JLabel("You have " + remainingGuesses + " remaining", SwingConstants.CENTER);
 		wrong = new JLabel("Wrong guesses so far: " + wrongGuesses);
 		visibleLabel = new JLabel(visible, SwingConstants.CENTER);
 		input = new JTextField();
-
+		
 		//initialize panels
 		hangmanPanel = new HangmanFigure();
 		UIPanel = new JPanel(new GridLayout(4, 1));
@@ -57,123 +58,128 @@ public class GameScreen extends Screen {
 		//initialize main panel (master race)
 		corePanel = new JPanel();
 		corePanel.setLayout(new BorderLayout());
-
+		
 	}
 
 	public void assemble() {
 		
 		setInputListener();
 		input.addActionListener(inputListener);
-
+		
 		UIPanel.add(status);
 		UIPanel.add(visibleLabel);
 		UIPanel.add(input);
 		UIPanel.add(wrong);
-
+		
 		corePanel.add(UIPanel, BorderLayout.SOUTH);
 		corePanel.add(hangmanPanel, BorderLayout.CENTER);
-
+		
 	}
 
 	public void setFocus() {
-
+		
 		input.requestFocus();
-
+		
 	}
 
 	public JPanel getPanel() {
 		
 		return corePanel;
-
+		
 	}
 
 	private void setInputListener() {
 		
 		inputListener = new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				
 				String text = input.getText();
-
+				
 				if (text.length() == 1 && text.matches("[a-z]")) {
-
+					
 					boolean guessFound = false;
-
+					
 					for (int i = 0; i < word.length(); ++i) {
-
+						
 						if (text.charAt(0) == word.charAt(i)) {
-
+							
 							guessFound = true;
 							String newVisible = "";
-
+							
 							for (int j = 0; j < visible.length(); ++j) {
 
 								if (j == (i * 2)) {
-
+									
 									newVisible += word.charAt(i);
-
+									
 								} else {
-
+									
 									newVisible += visible.charAt(j);
-
+									
 								}
-
+								
 							}
-
+							
 							visible = newVisible;
 							visibleLabel.setText(visible);
-
+							
 						}
-
+						
 					}
-
+					
 					if (!guessFound) {
-
+						
 						if (--remainingGuesses >= 0) {
-
+							
 							status.setText("You have " + remainingGuesses + " guesses remaining");
 							wrongGuesses += text + " ";
 							wrong.setText("Wrong guesses so far: " + wrongGuesses);
 							hangmanPanel.set();
-						
+							
 						} else {
-
+							
 							status.setText("You lost: the word was " + word);
 							input.setEnabled(false);
-
+							
+							Window window = (Window) SwingUtilities.getRoot(corePanel);
+							window.setCurrentScreen(new HighScoreScreen());
 						}
-
+						
 					} else {
-
+						
 						String actualVisible = "";
 						for (int i = 0; i < visible.length(); i += 2) {
-
+							
 							actualVisible += visible.charAt(i);
-
+							
 						}
-
+						
 						if (actualVisible.equals(word)) {
-
+							
 							status.setText("Congratulations, you have won!");
 							input.setEnabled(false);
-
+							
+							Window window = (Window) SwingUtilities.getRoot(corePanel);
+							window.setCurrentScreen(new HighScoreScreen());
+							
 						}
-					
+						
 					}
-
+					
 				} else {
 					
 					System.out.println("Invalid input!");
-
+					
 				}
-
+				
 				input.setText("");
-
+				
 			}
-
+			
 		};
-
+		
 	}
-
+	
 }

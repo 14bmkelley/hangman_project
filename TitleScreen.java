@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
@@ -78,7 +79,6 @@ public class TitleScreen extends Screen {
 				
 				if (keyCode == 10 || keyCode == 13) {
 					
-					System.out.println("Hey");
 					Window window = (Window) SwingUtilities.getRoot(corePanel);
 					window.setCurrentScreen(new GameScreen("cat"));
 					
