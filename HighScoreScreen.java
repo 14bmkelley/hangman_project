@@ -1,4 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
@@ -19,6 +22,9 @@ public class HighScoreScreen extends Screen {
     //master panel (<-- look at that panel, lording it over there)
     private JPanel corePanel;
     
+	//listener to exit program or restart
+	private KeyListener keyListener;
+
     public HighScoreScreen() {
         
         //initialize fields
@@ -33,14 +39,18 @@ public class HighScoreScreen extends Screen {
         //initialize lord panel
         corePanel = new JPanel();
         corePanel.setLayout(new BorderLayout());
-        
+
+		//initialize keylistener
+		setKeyListener();
+
     }
     
     public void assemble() {
         
         panel.add(titleLabel);
         corePanel.add(panel, BorderLayout.CENTER);
-        
+        corePanel.addKeyListener(keyListener);
+
     }
     
     public JPanel getPanel() {
@@ -55,5 +65,40 @@ public class HighScoreScreen extends Screen {
         corePanel.requestFocus();
         
     }
-    
+	
+	private void setKeyListener() {
+		
+		keyListener = new KeyListener() {
+			
+			@Override
+			public void keyPressed(KeyEvent keyEvent) {
+				
+				int keyCode = keyEvent.getKeyCode();
+				
+				if (keyCode == 10 || keyCode == 13) {
+					
+					System.exit(0);
+					
+				}
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent key) {
+				
+				//do nothing
+				
+			}
+			
+			@Override
+			public void keyTyped(KeyEvent key) {
+				
+				//do nothing
+				
+			}
+			
+		};
+	
+	}
+
 }

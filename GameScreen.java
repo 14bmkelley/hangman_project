@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import java.lang.Thread;
+
 public class GameScreen extends Screen {
 	
 	//fields for game information
@@ -35,7 +37,7 @@ public class GameScreen extends Screen {
 
 	public GameScreen(String toGuess) {
 		
-		//initalize fields
+		//initialize fields
 		remainingGuesses = 10;
 		wrongGuesses = "";
 		word = toGuess;
@@ -45,7 +47,7 @@ public class GameScreen extends Screen {
 			visible += "_ ";
 		}
 		
-		//initalize components
+		//initialize components
 		status = new JLabel("You have " + remainingGuesses + " remaining", SwingConstants.CENTER);
 		wrong = new JLabel("Wrong guesses so far: " + wrongGuesses);
 		visibleLabel = new JLabel(visible, SwingConstants.CENTER);
@@ -143,8 +145,21 @@ public class GameScreen extends Screen {
 							status.setText("You lost: the word was " + word);
 							input.setEnabled(false);
 							
-							Window window = (Window) SwingUtilities.getRoot(corePanel);
-							window.setCurrentScreen(new HighScoreScreen());
+							/*
+							 * need to run two things at once
+							 *  *repaint runnable will repaint the losing screen
+							 *  *transition runnable will delay the screen transition
+							 * 		while the repaint finishes, then transitions
+							 */
+							RepaintRunnable r1 = new RepaintRunnable();
+							TransitionRunnable r2 = new TransitionRunnable();
+							
+							Thread th1 = new Thread(r1);
+							Thread th2 = new Thread(r2);
+							
+							th1.start();
+							th2.start();
+							
 						}
 						
 					} else {
@@ -161,8 +176,20 @@ public class GameScreen extends Screen {
 							status.setText("Congratulations, you have won!");
 							input.setEnabled(false);
 							
-							Window window = (Window) SwingUtilities.getRoot(corePanel);
-							window.setCurrentScreen(new HighScoreScreen());
+							/*
+							 * need to run two things at once
+							 *  *repaint runnable will repaint the winning screen
+							 *  *transition runnable will delay the screen transition
+							 * 		while the repaint finishes, then transitions
+							 */
+							RepaintRunnable r1 = new RepaintRunnable();
+							TransitionRunnable r2 = new TransitionRunnable();
+							
+							Thread th1 = new Thread(r1);
+							Thread th2 = new Thread(r2);
+							
+							th1.start();
+							th2.start();
 							
 						}
 						
@@ -179,6 +206,46 @@ public class GameScreen extends Screen {
 			}
 			
 		};
+		
+	}
+	
+	private class RepaintRunnable implements Runnable {
+		
+		@Override
+		public void run() {
+			
+			Window window = (Window) SwingUtilities.getRoot(corePanel);
+			window.revalidate();
+			window.repaint();
+			
+		}
+		
+	}
+	
+	private class TransitionRunnable implements Runnable {
+		
+		@Override
+		public void run() {
+			
+			takeABreak();
+			Window window = (Window) SwingUtilities.getRoot(corePanel);
+			window.setCurrentScreen(new HighScoreScreen());
+			
+		}
+		
+		private void takeABreak() {
+			
+			try {
+				
+				Thread.sleep(2000);
+				
+			} catch (InterruptedException error) {
+				
+				System.exit(1);
+				
+			}
+			
+		}
 		
 	}
 	

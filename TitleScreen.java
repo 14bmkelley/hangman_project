@@ -89,14 +89,14 @@ public class TitleScreen extends Screen {
 			@Override
 			public void keyReleased(KeyEvent key) {
 				
-				keyDummy++;
+				//do nothing
 				
 			}
 			
 			@Override
 			public void keyTyped(KeyEvent key) {
 				
-				keyDummy--;
+				//do nothing
 				
 			}
 			
