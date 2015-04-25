@@ -8,8 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-
-import java.lang.Thread;
+import javax.swing.Timer;
 
 public class GameScreen extends Screen {
 	
@@ -25,8 +24,13 @@ public class GameScreen extends Screen {
 	private JLabel visibleLabel;
 	private JTextField input;
 
-	//listener for text input
+	//actionlistener for text input
 	private ActionListener inputListener;
+	
+	//transitioning
+	private int delay;
+	private Timer transitionTimeout;
+	private ActionListener transitionListener;
 
 	//jpanels to be added
 	private HangmanFigure hangmanPanel;
@@ -60,12 +64,18 @@ public class GameScreen extends Screen {
 		//initialize main panel (master race)
 		corePanel = new JPanel();
 		corePanel.setLayout(new BorderLayout());
+
+		setInputListener();
+		setTransitionListener();
 		
+		delay = 2000;
+		transitionTimeout = new Timer(delay, transitionListener);
+		transitionTimeout.setRepeats(false);
+
 	}
 
 	public void assemble() {
 		
-		setInputListener();
 		input.addActionListener(inputListener);
 		
 		UIPanel.add(status);
@@ -145,21 +155,12 @@ public class GameScreen extends Screen {
 							status.setText("You lost: the word was " + word);
 							input.setEnabled(false);
 							
-							/*
-							 * need to run two things at once
-							 *  *repaint runnable will repaint the losing screen
-							 *  *transition runnable will delay the screen transition
-							 * 		while the repaint finishes, then transitions
-							 */
-							RepaintRunnable r1 = new RepaintRunnable();
-							TransitionRunnable r2 = new TransitionRunnable();
+							Window window = (Window) SwingUtilities.getRoot(corePanel);
+							window.revalidate();
+							window.repaint();
 							
-							Thread th1 = new Thread(r1);
-							Thread th2 = new Thread(r2);
-							
-							th1.start();
-							th2.start();
-							
+							transitionTimeout.start();
+
 						}
 						
 					} else {
@@ -176,21 +177,13 @@ public class GameScreen extends Screen {
 							status.setText("Congratulations, you have won!");
 							input.setEnabled(false);
 							
-							/*
-							 * need to run two things at once
-							 *  *repaint runnable will repaint the winning screen
-							 *  *transition runnable will delay the screen transition
-							 * 		while the repaint finishes, then transitions
-							 */
-							RepaintRunnable r1 = new RepaintRunnable();
-							TransitionRunnable r2 = new TransitionRunnable();
+							Window window = (Window) SwingUtilities.getRoot(corePanel);
+
+							window.revalidate();
+							window.repaint();
 							
-							Thread th1 = new Thread(r1);
-							Thread th2 = new Thread(r2);
-							
-							th1.start();
-							th2.start();
-							
+							transitionTimeout.start();
+
 						}
 						
 					}
@@ -209,43 +202,19 @@ public class GameScreen extends Screen {
 		
 	}
 	
-	private class RepaintRunnable implements Runnable {
-		
-		@Override
-		public void run() {
-			
-			Window window = (Window) SwingUtilities.getRoot(corePanel);
-			window.revalidate();
-			window.repaint();
-			
-		}
-		
-	}
-	
-	private class TransitionRunnable implements Runnable {
-		
-		@Override
-		public void run() {
-			
-			takeABreak();
-			Window window = (Window) SwingUtilities.getRoot(corePanel);
-			window.setCurrentScreen(new HighScoreScreen());
-			
-		}
-		
-		private void takeABreak() {
-			
-			try {
+	private void setTransitionListener() {
+
+		transitionListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
 				
-				Thread.sleep(2000);
-				
-			} catch (InterruptedException error) {
-				
-				System.exit(1);
+				Window window = (Window) SwingUtilities.getRoot(corePanel);
+				window.setCurrentScreen(new HighScoreScreen());
 				
 			}
 			
-		}
+		};
 		
 	}
 	
