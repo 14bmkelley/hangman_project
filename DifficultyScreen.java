@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
 
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -46,11 +47,14 @@ public class DifficultyScreen extends Screen {
 		//initialize working panel
 		titlePanel = new JPanel();
 		buttonPanel = new JPanel(new GridLayout(1, 3));
-
+		titlePanel.setOpaque(false);
+		buttonPanel.setOpaque(false);
+		
 		//initialize master panel
 		corePanel = new JPanel();
 		corePanel.setLayout(new BorderLayout());
 		corePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		corePanel.setBackground(new Color(173, 216, 230));
 
 		//initialize keylistener
 		setKeyListener();
