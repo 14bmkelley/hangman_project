@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
@@ -7,6 +8,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
 
 public class DifficultyScreen extends Screen {
 
@@ -15,9 +18,13 @@ public class DifficultyScreen extends Screen {
 	
 	//component for field
 	private JLabel titleLabel;
+	private JButton easyDifficulty;
+	private JButton mediumDifficulty;
+	private JButton hardDifficulty;
 
 	//jpanel to be added
-	private JPanel panel;
+	private JPanel titlePanel;
+	private JPanel buttonPanel;
 
 	//master panel
 	private JPanel corePanel;
@@ -32,13 +39,18 @@ public class DifficultyScreen extends Screen {
 		
 		//initialize component
 		titleLabel = new JLabel(title, SwingConstants.CENTER);
+		easyDifficulty = new JButton("Easy");
+		mediumDifficulty = new JButton("Medium");
+		hardDifficulty = new JButton("Hard");
 
 		//initialize working panel
-		panel = new JPanel();
+		titlePanel = new JPanel();
+		buttonPanel = new JPanel(new GridLayout(1, 3));
 
 		//initialize master panel
 		corePanel = new JPanel();
 		corePanel.setLayout(new BorderLayout());
+		corePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		//initialize keylistener
 		setKeyListener();
@@ -47,8 +59,12 @@ public class DifficultyScreen extends Screen {
 
 	public void assemble() {
 
-		panel.add(titleLabel);
-		corePanel.add(panel, BorderLayout.CENTER);
+		titlePanel.add(titleLabel);
+		buttonPanel.add(easyDifficulty);
+		buttonPanel.add(mediumDifficulty);
+		buttonPanel.add(hardDifficulty);
+		corePanel.add(titlePanel, BorderLayout.CENTER);
+		corePanel.add(buttonPanel, BorderLayout.SOUTH);
 		corePanel.addKeyListener(keyListener);
 
 	}
