@@ -1,4 +1,4 @@
 *.class
 *.java~
 hangman_project.komodoproject
-.*
+*~
