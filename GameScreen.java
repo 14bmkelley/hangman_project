@@ -210,7 +210,10 @@ public class GameScreen extends Screen {
 			public void actionPerformed(ActionEvent event) {
 				
 				Window window = (Window) SwingUtilities.getRoot(corePanel);
-				window.setCurrentScreen(new HighScoreScreen());
+				
+				if (remainingGuesses == -1)
+                                	remainingGuesses = 0;
+                            	window.setCurrentScreen(new HighScoreScreen(remainingGuesses));
 				
 			}
 			
