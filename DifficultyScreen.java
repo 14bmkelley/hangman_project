@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
@@ -46,15 +47,15 @@ public class DifficultyScreen extends Screen {
 
 		//initialize working panel
 		titlePanel = new JPanel();
-		buttonPanel = new JPanel(new GridLayout(1, 3));
 		titlePanel.setOpaque(false);
+		titlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		buttonPanel = new JPanel(new GridBagLayout());
 		buttonPanel.setOpaque(false);
+		buttonPanel.setBorder(new EmptyBorder(20, 10, 10, 10));
 		
 		//initialize master panel
-		corePanel = new JPanel();
-		corePanel.setLayout(new BorderLayout());
-		corePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		corePanel.setBackground(new Color(173, 216, 230));
+		corePanel = new BackgroundPanel();
+		corePanel.setLayout(new FlowLayout());
 
 		//initialize keylistener
 		setKeyListener();
@@ -67,8 +68,8 @@ public class DifficultyScreen extends Screen {
 		buttonPanel.add(easyDifficulty);
 		buttonPanel.add(mediumDifficulty);
 		buttonPanel.add(hardDifficulty);
-		corePanel.add(titlePanel, BorderLayout.CENTER);
-		corePanel.add(buttonPanel, BorderLayout.SOUTH);
+		corePanel.add(titlePanel);
+		corePanel.add(buttonPanel);
 		corePanel.addKeyListener(keyListener);
 
 	}

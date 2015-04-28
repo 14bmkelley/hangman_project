@@ -58,12 +58,12 @@ public class GameScreen extends Screen {
 		input = new JTextField();
 		
 		//initialize panels
-		hangmanPanel = new HangmanFigure();
+		hangmanPanel = new HangmanFigure(200, 200);
 		UIPanel = new JPanel(new GridLayout(4, 1));
+		UIPanel.setOpaque(false);
 		
 		//initialize main panel (master race)
-		corePanel = new JPanel();
-		corePanel.setLayout(new BorderLayout());
+		corePanel = new BackgroundPanel();
 
 		setInputListener();
 		setTransitionListener();
@@ -82,7 +82,7 @@ public class GameScreen extends Screen {
 		UIPanel.add(visibleLabel);
 		UIPanel.add(input);
 		UIPanel.add(wrong);
-		
+
 		corePanel.add(UIPanel, BorderLayout.SOUTH);
 		corePanel.add(hangmanPanel, BorderLayout.CENTER);
 		

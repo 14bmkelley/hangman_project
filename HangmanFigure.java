@@ -7,12 +7,13 @@ import javax.swing.JPanel;
 public class HangmanFigure extends JPanel {
 	
 	private int guesses;
+	private int centerX, centerY;
 
-	public HangmanFigure() {
+	public HangmanFigure(int centerX, int centerY) {
 		super();
 		guesses = 0;
-		setPreferredSize(new Dimension(300, 300));
-		setOpaque(true);
+		this.centerX = centerX;
+		this.centerY = centerY;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -20,52 +21,52 @@ public class HangmanFigure extends JPanel {
 		
 		// base
 		if(guesses > 0) {
-			g.drawLine(1, 299, 299, 299);
+			g.drawLine(centerX - 149, centerY + 149, centerX + 149, centerY + 149);
 		}
 		
 		// right wall
 		if(guesses > 1) {
-			g.drawLine(299, 299, 299, 1);
+			g.drawLine(centerX + 149, centerY + 149, centerX + 149, centerY - 149);
 		}
 		
 		// top line
 		if(guesses > 2) {
-			g.drawLine(150, 1, 299, 1);
+			g.drawLine(centerX, centerY - 149, centerX + 149, centerY - 149);
 		}
 		
 		// hanging line
 		if(guesses > 3) {
-			g.drawLine(150, 1, 150, 70);
+			g.drawLine(centerX, centerY - 149, centerX, centerY - 80);
 		}
 		
 		// face
 		if(guesses > 4) {
-			g.drawOval(150-25, 70, 50, 50);
+			g.drawOval(centerX - 25, centerY - 80, 50, 50);
 		}
 		
 		// body
 		if(guesses > 5) {
-			g.drawLine(150, 120, 150, 200);
+			g.drawLine(centerX, centerY - 30, centerX, centerY + 50);
 		}
 		
 		// left hand
 		if(guesses > 6) {
-			g.drawLine(150, 150, 110, 140);
+			g.drawLine(centerX, centerY, centerX - 40, centerY - 10);
 		}
 		
 		// right hand
 		if(guesses > 7) {
-			g.drawLine(150, 150, 190, 140);
+			g.drawLine(centerX, centerY, centerX + 40, centerY - 10);
 		}
 		
 		// left leg
 		if(guesses > 8) {
-			g.drawLine(150, 200, 120, 250);
+			g.drawLine(centerX, centerY + 50, centerX - 30, centerY + 100);
 		}
 		
 		// right leg
 		if(guesses > 9) {
-			g.drawLine(150, 200, 180, 250);
+			g.drawLine(centerX, centerY + 50, centerX + 30, centerY + 100);
 		}
 	}
 	

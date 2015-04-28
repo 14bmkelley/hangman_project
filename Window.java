@@ -20,7 +20,7 @@ public class Window extends JFrame {
 		
 		word = selectedWord;
 		
-		this.setPreferredSize(new Dimension(300, 400));
+		this.setPreferredSize(new Dimension(400, 600));
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

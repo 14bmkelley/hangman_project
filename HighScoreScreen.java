@@ -35,10 +35,10 @@ public class HighScoreScreen extends Screen {
         
         //initialize panel
         panel = new JPanel();
+		panel.setOpaque(false);
         
         //initialize lord panel
-        corePanel = new JPanel();
-        corePanel.setLayout(new BorderLayout());
+        corePanel = new BackgroundPanel();
 
 		//initialize keylistener
 		setKeyListener();

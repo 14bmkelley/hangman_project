@@ -12,7 +12,6 @@ public class TitleScreen extends Screen {
 
 	//field to store information
 	private String title;
-	private int keyDummy;
 
 	//component for field
 	private JLabel titleLabel;
@@ -30,7 +29,6 @@ public class TitleScreen extends Screen {
 		
 		//initialize fields
 		title = "Welcome to Hangman!";
-		keyDummy = 0;
 		
 		//initialize component
 		titleLabel = new JLabel(title, SwingConstants.CENTER);
@@ -39,8 +37,7 @@ public class TitleScreen extends Screen {
 		panel = new JPanel();
 		
 		//initialize master panel
-		corePanel = new JPanel();
-		corePanel.setLayout(new BorderLayout());
+		corePanel = new BackgroundPanel();
 		
 		//initialize keylistener
 		setKeyListener();
@@ -50,6 +47,7 @@ public class TitleScreen extends Screen {
 	public void assemble() {
 		
 		panel.add(titleLabel);
+		panel.setOpaque(false);
 		corePanel.add(panel, BorderLayout.CENTER);
 		corePanel.addKeyListener(keyListener);
 		
