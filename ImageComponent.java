@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.awt.Dimension;
 
 public class ImageComponent extends JComponent {
 
@@ -16,6 +17,8 @@ public class ImageComponent extends JComponent {
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
+
+		this.setPreferredSize(new Dimension(300, 300));
 	
 	}
 

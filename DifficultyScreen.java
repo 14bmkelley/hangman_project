@@ -80,10 +80,18 @@ public class DifficultyScreen extends Screen {
 		buttonPanelFormatting.gridy = 0;
 		buttonPanelFormatting.gridwidth = 3;
 		buttonPanelFormatting.insets = new Insets(10, 10, 10, 10);
+		buttonPanelFormatting.ipady = 150;
+		buttonPanelFormatting.ipadx = 200;
+		buttonPanelFormatting.anchor = GridBagConstraints.CENTER;
 
 		buttonPanel.add(easyPicture, buttonPanelFormatting);
 
 		buttonPanelFormatting.gridy = 1;
+		buttonPanelFormatting.gridx = 2;
+		buttonPanelFormatting.gridwidth = 1;
+		buttonPanelFormatting.ipady = 20;
+		buttonPanelFormatting.ipadx = 20;
+		buttonPanelFormatting.fill = GridBagConstraints.NONE;
 
 		buttonPanel.add(easyDifficulty, buttonPanelFormatting);
 		
