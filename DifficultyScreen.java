@@ -80,8 +80,8 @@ public class DifficultyScreen extends Screen {
 		buttonPanelFormatting.gridy = 0;
 		buttonPanelFormatting.gridwidth = 3;
 		buttonPanelFormatting.insets = new Insets(10, 10, 10, 10);
-		buttonPanelFormatting.ipady = 150;
-		buttonPanelFormatting.ipadx = 200;
+		buttonPanelFormatting.ipady = 80;
+		buttonPanelFormatting.ipadx = 80;
 		buttonPanelFormatting.anchor = GridBagConstraints.CENTER;
 
 		buttonPanel.add(easyPicture, buttonPanelFormatting);
@@ -96,18 +96,38 @@ public class DifficultyScreen extends Screen {
 		buttonPanel.add(easyDifficulty, buttonPanelFormatting);
 		
 		buttonPanelFormatting.gridy = 2;
+		buttonPanelFormatting.gridx = 0;
+		buttonPanelFormatting.gridwidth = 3;
+		buttonPanelFormatting.ipady = 80;
+		buttonPanelFormatting.ipadx = 80;
+		buttonPanelFormatting.fill = GridBagConstraints.CENTER;
 		
 		buttonPanel.add(mediumPicture, buttonPanelFormatting);
-		
+
 		buttonPanelFormatting.gridy = 3;
+		buttonPanelFormatting.gridx = 2;
+		buttonPanelFormatting.gridwidth = 1;
+		buttonPanelFormatting.ipady = 20;
+		buttonPanelFormatting.ipadx = 20;
+		buttonPanelFormatting.fill = GridBagConstraints.NONE;
 		
 		buttonPanel.add(mediumDifficulty, buttonPanelFormatting);
 		
 		buttonPanelFormatting.gridy = 4;
-		
+		buttonPanelFormatting.gridx = 0;
+		buttonPanelFormatting.gridwidth = 3;
+		buttonPanelFormatting.ipady = 80;
+		buttonPanelFormatting.ipadx = 80;
+		buttonPanelFormatting.fill = GridBagConstraints.CENTER;
+	
 		buttonPanel.add(hardPicture, buttonPanelFormatting);
-		
+
 		buttonPanelFormatting.gridy = 5;
+		buttonPanelFormatting.gridx = 2;
+		buttonPanelFormatting.gridwidth = 1;
+		buttonPanelFormatting.ipady = 20;
+		buttonPanelFormatting.ipadx = 20;
+		buttonPanelFormatting.fill = GridBagConstraints.NONE;
 		
 		buttonPanel.add(hardDifficulty, buttonPanelFormatting);
 

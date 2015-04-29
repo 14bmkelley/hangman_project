@@ -18,7 +18,7 @@ public class ImageComponent extends JComponent {
 			exception.printStackTrace();
 		}
 
-		this.setPreferredSize(new Dimension(300, 300));
+		this.setPreferredSize(new Dimension(100, 100));
 	
 	}
 
