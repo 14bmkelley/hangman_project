@@ -1,9 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
+import java.awt.Insets;
 
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -23,10 +24,14 @@ public class DifficultyScreen extends Screen {
 	private JButton easyDifficulty;
 	private JButton mediumDifficulty;
 	private JButton hardDifficulty;
+	private ImageComponent easyPicture;
+	private ImageComponent mediumPicture;
+	private ImageComponent hardPicture;
 
 	//jpanel to be added
 	private JPanel titlePanel;
 	private JPanel buttonPanel;
+	private GridBagConstraints buttonPanelFormatting;
 
 	//master panel
 	private JPanel corePanel;
@@ -44,6 +49,9 @@ public class DifficultyScreen extends Screen {
 		easyDifficulty = new JButton("Easy");
 		mediumDifficulty = new JButton("Medium");
 		hardDifficulty = new JButton("Hard");
+		easyPicture = new ImageComponent("easy.jpg");
+		mediumPicture = new ImageComponent("medium.jpg");
+		hardPicture = new ImageComponent("hard.jpg");
 
 		//initialize working panel
 		titlePanel = new JPanel();
@@ -52,10 +60,11 @@ public class DifficultyScreen extends Screen {
 		buttonPanel = new JPanel(new GridBagLayout());
 		buttonPanel.setOpaque(false);
 		buttonPanel.setBorder(new EmptyBorder(20, 10, 10, 10));
-		
+		buttonPanelFormatting = new GridBagConstraints();
+
 		//initialize master panel
 		corePanel = new BackgroundPanel();
-		corePanel.setLayout(new FlowLayout());
+		corePanel.setLayout(new BorderLayout());
 
 		//initialize keylistener
 		setKeyListener();
@@ -64,12 +73,38 @@ public class DifficultyScreen extends Screen {
 
 	public void assemble() {
 
-		titlePanel.add(titleLabel);
-		buttonPanel.add(easyDifficulty);
-		buttonPanel.add(mediumDifficulty);
-		buttonPanel.add(hardDifficulty);
-		corePanel.add(titlePanel);
-		corePanel.add(buttonPanel);
+		titlePanel.add(titleLabel, SwingConstants.CENTER);
+		
+		buttonPanelFormatting.fill = GridBagConstraints.HORIZONTAL;
+		buttonPanelFormatting.gridx = 0;
+		buttonPanelFormatting.gridy = 0;
+		buttonPanelFormatting.gridwidth = 3;
+		buttonPanelFormatting.insets = new Insets(10, 10, 10, 10);
+
+		buttonPanel.add(easyPicture, buttonPanelFormatting);
+
+		buttonPanelFormatting.gridy = 1;
+
+		buttonPanel.add(easyDifficulty, buttonPanelFormatting);
+		
+		buttonPanelFormatting.gridy = 2;
+		
+		buttonPanel.add(mediumPicture, buttonPanelFormatting);
+		
+		buttonPanelFormatting.gridy = 3;
+		
+		buttonPanel.add(mediumDifficulty, buttonPanelFormatting);
+		
+		buttonPanelFormatting.gridy = 4;
+		
+		buttonPanel.add(hardPicture, buttonPanelFormatting);
+		
+		buttonPanelFormatting.gridy = 5;
+		
+		buttonPanel.add(hardDifficulty, buttonPanelFormatting);
+
+		corePanel.add(titlePanel, BorderLayout.NORTH);
+		corePanel.add(buttonPanel, BorderLayout.CENTER);
 		corePanel.addKeyListener(keyListener);
 
 	}
