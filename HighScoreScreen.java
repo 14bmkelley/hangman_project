@@ -13,13 +13,16 @@ import java.io.File;
 import java.io.IOException;
 
 
+
 public class HighScoreScreen extends Screen {
     
     //field to store information
     private String title;
+    private String scoreBoard;
     
     //component for field
     private JLabel titleLabel;
+    private JLabel scoreLabel;
     
     //jpanel to be added
     private JPanel panel;
@@ -29,9 +32,11 @@ public class HighScoreScreen extends Screen {
     
     //score that will be added to the HighScoreScreen
     private int score;
+    List<Integer> scores;
+    int[] highScores;
     
     //listener to exit program or restart
-	private KeyListener keyListener;
+    private KeyListener keyListener;
 
     public HighScoreScreen() {
         
@@ -58,17 +63,25 @@ public class HighScoreScreen extends Screen {
         addScore(remainingGuesses);
 
         //initialize fields
-        title = "This is the high score screen";
+        scoreBoard = "<html>High Scores<br>";
+        
+        for (int v = 0; v < highScores.length; v++)
+            scoreBoard += ((v+1) + ": " + highScores[v] + "<br>");
+        scoreBoard += "</html>";
+
 
         //initialize component
-        titleLabel = new JLabel(title, SwingConstants.CENTER);
+	scoreLabel = new JLabel(scoreBoard, SwingConstants.CENTER);
 
         //initialize panel
-        panel = new JPanel();
+        panel = new JPanel(new BorderLayout());
 
         //initialize lord panel
         corePanel = new JPanel();
         corePanel.setLayout(new BorderLayout());
+        
+        //initialize keylistener
+	setKeyListener();
 
     }
     
@@ -97,9 +110,42 @@ public class HighScoreScreen extends Screen {
         }
     }
     
+    public void readScores()
+    {
+        int max = Integer.MIN_VALUE;
+        int index = 0;
+        highScores = new int[5];
+        try {
+            scores = new ArrayList<>();
+            for (String line : Files.readAllLines(Paths.get("HighScores.txt"))) {
+                for (String part : line.split("\\s")) {
+                    Integer i = Integer.valueOf(part);
+                    scores.add(i);
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            for (int s = 0; s < scores.size(); s++)
+            {
+                if ( ((int)scores.get(s)) >= max) {
+                    max = (int)scores.get(s);
+                    index = s;
+                    highScores[i] = max;
+                }
+            }
+            max = Integer.MIN_VALUE;
+            scores.set(index, (Integer)0);
+        }
+    }
+    
     public void assemble() {
         
-        panel.add(titleLabel);
+        panel.add(scoreLabel);
         corePanel.add(panel, BorderLayout.CENTER);
         corePanel.addKeyListener(keyListener);
 
@@ -132,6 +178,14 @@ public class HighScoreScreen extends Screen {
 					System.exit(0);
 					
 				}
+				else if (keyCode == 8) {
+					
+					Window window = (Window) SwingUtilities.getRoot(corePanel);
+					
+					window.setCurrentScreen(new GameScreen("cat"));
+				}
+					
+					}
 				
 			}
 			
