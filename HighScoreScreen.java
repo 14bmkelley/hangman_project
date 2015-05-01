@@ -6,12 +6,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class HighScoreScreen extends Screen {
@@ -48,13 +51,13 @@ public class HighScoreScreen extends Screen {
         
         //initialize panel
         panel = new JPanel();
-		panel.setOpaque(false);
+	panel.setOpaque(false);
         
         //initialize lord panel
         corePanel = new BackgroundPanel();
 
-		//initialize keylistener
-		setKeyListener();
+	//initialize keylistener
+	setKeyListener();
 
     }
     //HighScoreScreen constructor for a high score being passed the final score
@@ -108,6 +111,8 @@ public class HighScoreScreen extends Screen {
         catch(IOException e){
             e.printStackTrace();
         }
+        
+        readScores();
     }
     
     public void readScores()
