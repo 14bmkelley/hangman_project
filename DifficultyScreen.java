@@ -1,8 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Insets;
 
@@ -27,6 +27,9 @@ public class DifficultyScreen extends Screen {
 	private ImageComponent easyPicture;
 	private ImageComponent mediumPicture;
 	private ImageComponent hardPicture;
+	private ActionListener easyListener;
+	private ActionListener mediumListener;
+	private ActionListener hardListener;
 
 	//jpanel to be added
 	private JPanel titlePanel;
@@ -35,9 +38,6 @@ public class DifficultyScreen extends Screen {
 
 	//master panel
 	private JPanel corePanel;
-
-	//listener to register keypress
-	private KeyListener keyListener;
 
 	public DifficultyScreen() {
 
@@ -67,7 +67,7 @@ public class DifficultyScreen extends Screen {
 		corePanel.setLayout(new BorderLayout());
 
 		//initialize keylistener
-		setKeyListener();
+		setActionListeners();
 
 	}
 
@@ -133,7 +133,10 @@ public class DifficultyScreen extends Screen {
 
 		corePanel.add(titlePanel, BorderLayout.NORTH);
 		corePanel.add(buttonPanel, BorderLayout.CENTER);
-		corePanel.addKeyListener(keyListener);
+		
+		easyDifficulty.addActionListener(easyListener);
+		mediumDifficulty.addActionListener(mediumListener);
+		hardDifficulty.addActionListener(hardListener);
 
 	}
 
@@ -150,32 +153,44 @@ public class DifficultyScreen extends Screen {
 
 	}
 
-	private void setKeyListener() {
+	private void setActionListeners() {
 
-		keyListener = new KeyListener() {
-			
+		easyListener = new ActionListener() {
+
 			@Override
-			public void keyPressed(KeyEvent keyEvent) {
+			public void actionPerformed(ActionEvent action) {
 
-				int keyCode = keyEvent.getKeyCode();
+				Window window = (Window) SwingUtilities.getRoot(corePanel);
+				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.EASY)));
 
-				if (keyCode == 10 || keyCode == 13) {
-
-					Window window = (Window) SwingUtilities.getRoot(corePanel);
-					window.setCurrentScreen(new GameScreen("cat"));
-
-				}
-		
 			}
 
-			@Override
-			public void keyReleased(KeyEvent keyEvent) { /* do nothing */ }
+		};
+
+		mediumListener = new ActionListener() {
 
 			@Override
-			public void keyTyped(KeyEvent keyEvent) { /* do nothing */ }
+			public void actionPerformed(ActionEvent action) {
+
+				Window window = (Window) SwingUtilities.getRoot(corePanel);
+				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.MEDIUM)));
+
+			}
+
+		};
+
+		hardListener = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent action) {
+
+				Window window = (Window) SwingUtilities.getRoot(corePanel);
+				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.HARD)));
+
+			}
 
 		};
 
 	}
-
+	
 }

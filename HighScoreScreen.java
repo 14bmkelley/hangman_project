@@ -28,7 +28,7 @@ public class HighScoreScreen extends Screen {
     public HighScoreScreen() {
         
         //initialize fields
-        title = "This is the high score screen";
+        title = "Want to play again? Hit shift to play again or enter to quit.";
         
         //initialize component
         titleLabel = new JLabel(title, SwingConstants.CENTER);
@@ -79,6 +79,11 @@ public class HighScoreScreen extends Screen {
 					
 					System.exit(0);
 					
+				} else if (keyCode == 16) {
+
+					Window window = (Window) SwingUtilities.getRoot(corePanel);
+					window.setCurrentScreen(new DifficultyScreen());
+
 				}
 				
 			}
