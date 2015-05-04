@@ -161,7 +161,8 @@ public class DifficultyScreen extends Screen {
 			public void actionPerformed(ActionEvent action) {
 
 				Window window = (Window) SwingUtilities.getRoot(corePanel);
-				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.EASY)));
+				Dictionary d = new Dictionary();
+				window.setCurrentScreen(new GameScreen(d.getWord(Dictionary.EASY)));
 
 			}
 
@@ -173,7 +174,8 @@ public class DifficultyScreen extends Screen {
 			public void actionPerformed(ActionEvent action) {
 
 				Window window = (Window) SwingUtilities.getRoot(corePanel);
-				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.MEDIUM)));
+				Dictionary d = new Dictionary();
+				window.setCurrentScreen(new GameScreen(d.getWord(Dictionary.MEDIUM)));
 
 			}
 
@@ -185,7 +187,8 @@ public class DifficultyScreen extends Screen {
 			public void actionPerformed(ActionEvent action) {
 
 				Window window = (Window) SwingUtilities.getRoot(corePanel);
-				window.setCurrentScreen(new GameScreen(Dictionary.getWord(Dictionary.HARD)));
+				Dictionary d = new Dictionary();
+				window.setCurrentScreen(new GameScreen(d.getWord(Dictionary.HARD)));
 
 			}
 

@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 class Dictionary {
 
@@ -6,19 +6,34 @@ class Dictionary {
 	public static final int MEDIUM = 1;
 	public static final int HARD = 2;
 
-	public static String getWord(int difficulty) {
+	public static final String[] easyWords =
+		{"java", "double", "event", "jpanel", "return", "static", "class", "while", "loop", "method", "cast", "super"};
+	public static final String[] mediumWords =
+		{"variable", "operator", "extends", "boolean", "protected", "interface", "override", "abstract", "modulus", "object"};
+	public static final String[] hardWords =
+		{"instantiate", "expression", "arraylist", "polymorphism", "conditional", "graphics", "actionlistener", "recursion", "package", "constructor"};
+	
+	private int randomIndex;
+
+	public Dictionary() {
+		
+		randomIndex = new Random().nextInt(10);
+		
+	}
+	
+	public String getWord(int difficulty) {
 
 		if (difficulty == EASY) {
 
-			return "java";
+			return easyWords[randomIndex];
 
 		} else if (difficulty == MEDIUM) {
 
-			return "variable";
+			return mediumWords[randomIndex];
 
 		} else {
 
-			return "instantiate";
+			return hardWords[randomIndex];
 
 		}
 

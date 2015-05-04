@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
@@ -7,6 +8,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.border.EmptyBorder;
 
 public class TitleScreen extends Screen {
 
@@ -15,9 +17,11 @@ public class TitleScreen extends Screen {
 
 	//component for field
 	private JLabel titleLabel;
+	private ImageComponent hangmanPicture;
 
 	//jpanel to be added
 	private JPanel panel;
+	private JPanel imagePanel;
 
 	//master panel
 	private JPanel corePanel;
@@ -35,6 +39,8 @@ public class TitleScreen extends Screen {
 		
 		//initialze panel
 		panel = new JPanel();
+		imagePanel = new JPanel();
+		hangmanPicture = new ImageComponent("hangman.jpg");
 		
 		//initialize master panel
 		corePanel = new BackgroundPanel();
@@ -46,9 +52,16 @@ public class TitleScreen extends Screen {
 
 	public void assemble() {
 		
+		panel.setBorder(new EmptyBorder(50, 0, 0, 0));
 		panel.add(titleLabel);
 		panel.setOpaque(false);
-		corePanel.add(panel, BorderLayout.CENTER);
+		hangmanPicture.setPreferredSize(new Dimension(300, 300));
+		hangmanPicture.setOpaque(false);
+		imagePanel.setBorder(new EmptyBorder(100, 0, 0, 0));
+		imagePanel.setOpaque(false);
+		imagePanel.add(hangmanPicture);
+		corePanel.add(imagePanel, BorderLayout.CENTER);
+		corePanel.add(panel, BorderLayout.NORTH);
 		corePanel.addKeyListener(keyListener);
 		
 	}
